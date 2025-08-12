@@ -8,70 +8,69 @@
     </div>
 
     <!-- Signup Form -->
-    <form (ngSubmit)="signup()" #signupForm="ngForm">
+    <form [formGroup]="form" (ngSubmit)="signup()">
       <div class="form-group">
         <label for="fullName">Full Name</label>
         <input 
-          type="text" 
           id="fullName" 
-          name="fullName"
-          [(ngModel)]="fullName" 
+          type="text" 
+          formControlName="fullName" 
           placeholder="Enter your full name" 
-          required
-          class="form-input">
+          class="form-input" 
+          [class.error]="f['fullName'].invalid && f['fullName'].touched">
+        <div class="error-message" *ngIf="f['fullName'].errors && f['fullName'].touched">
+          <span *ngIf="f['fullName'].errors['required']">Name required</span>
+          <span *ngIf="f['fullName'].errors['minlength']">Min 2 chars</span>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="email">Email Address</label>
         <input 
-          type="email" 
           id="email" 
-          name="email"
-          [(ngModel)]="email" 
+          type="email" 
+          formControlName="email" 
           placeholder="Enter your email" 
-          required
-          class="form-input">
-      </div>
-
-      <div class="form-group">
-        <label for="newUserId">User ID</label>
-        <input 
-          type="text" 
-          id="newUserId" 
-          name="newUserId"
-          [(ngModel)]="newUserId" 
-          placeholder="Choose a user ID" 
-          required
-          class="form-input">
+          class="form-input" 
+          [class.error]="f['email'].invalid && f['email'].touched">
+        <div class="error-message" *ngIf="f['email'].errors && f['email'].touched">
+          <span *ngIf="f['email'].errors['required']">Email required</span>
+          <span *ngIf="f['email'].errors['email']">Invalid email</span>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="newPassword">Password</label>
         <input 
-          type="password" 
           id="newPassword" 
-          name="newPassword"
-          [(ngModel)]="newPassword" 
+          type="password" 
+          formControlName="newPassword" 
           placeholder="Create a password" 
-          required
-          class="form-input">
+          class="form-input" 
+          [class.error]="f['newPassword'].invalid && f['newPassword'].touched">
+        <div class="error-message" *ngIf="f['newPassword'].errors && f['newPassword'].touched">
+          <span *ngIf="f['newPassword'].errors['required']">Password required</span>
+          <span *ngIf="f['newPassword'].errors['minlength']">Min 6 chars</span>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input 
-          type="password" 
           id="confirmPassword" 
-          name="confirmPassword"
-          [(ngModel)]="confirmPassword" 
+          type="password" 
+          formControlName="confirmPassword" 
           placeholder="Confirm your password" 
-          required
-          class="form-input">
+          class="form-input" 
+          [class.error]="(f['confirmPassword'].touched && (f['confirmPassword'].invalid || form.errors?.['passwordsMismatch']))">
+        <div class="error-message" *ngIf="(f['confirmPassword'].touched && form.errors?.['passwordsMismatch'])">
+          Passwords do not match
+        </div>
       </div>
 
       <!-- Signup Button -->
-      <button type="submit" class="signup-btn" [disabled]="!signupForm.form.valid">
-        Create Account
+      <button type="submit" class="signup-btn" [disabled]="form.invalid || loading">
+        {{ loading ? 'Creating...' : 'Create Account' }}
       </button>
 
       <!-- Footer Links -->

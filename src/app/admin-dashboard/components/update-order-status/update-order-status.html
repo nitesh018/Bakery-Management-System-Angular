@@ -1,0 +1,19 @@
+<div class="status-section">
+  <h2>Change Order Status</h2>
+  <div class="form-group">
+    <label>Order ID:</label>
+    <input type="number" [(ngModel)]="orderId" placeholder="Enter order id">
+  </div>
+  <div class="form-group">
+    <label>New Status:</label>
+    <select [(ngModel)]="status">
+      <option value="">Select status</option>
+      <option value="Pending">Pending</option>
+      <option value="Done">Done</option>
+    </select>
+  </div>
+  <div class="buttons">
+    <button (click)="submit()" [disabled]="loading" class="update-btn">{{ loading ? 'Updating...' : 'Update Status' }}</button>
+    <button (click)="clear()" type="button" class="clear-btn">Clear Form</button>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="dashboard-container">
+  <!-- Navigation Bar -->
+  <app-navbar 
+    [cartCount]="cartCount"
+    (cartToggle)="toggleCart()"
+    (logoutClick)="logout()">
+  </app-navbar>
+
+  <!-- Shopping Cart Modal -->
+  <app-shopping-cart 
+    [showCart]="showCart"
+    [cartItems]="cartItems"
+    [cartLoading]="cartLoading"
+    [totalAmount]="getTotalAmount()"
+    (closeCart)="closeCart()"
+    (updateCart)="onCartUpdateRequested()"
+    (checkout)="onCheckoutRequested()">
+  </app-shopping-cart>
+
+  <!-- Cart Update Modal -->
+  <app-cart-update-modal
+    [showModal]="showUpdateModal"
+    [cartItems]="cartItems"
+    (closeModal)="onCloseUpdateModal()"
+    (updateCart)="onModalUpdateCart()"
+    (increaseQuantity)="onModalIncreaseQuantity($event)"
+    (decreaseQuantity)="onModalDecreaseQuantity($event)">
+  </app-cart-update-modal>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <app-product-grid 
+      [products]="products"
+      [loading]="loading"
+      [error]="error"
+      [selectedQuantities]="selectedQuantities"
+      (addToCart)="addToCart($event)"
+      (retryLoad)="loadProducts()"
+      (quantityChange)="onQuantityChange($event)">
+    </app-product-grid>
+  </div>
+</div>

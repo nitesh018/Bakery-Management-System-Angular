@@ -1,0 +1,25 @@
+<div class="products-section">
+  <h2>Our Bakery Products</h2>
+  
+  <!-- Loading State -->
+  <app-loading-spinner *ngIf="loading" message="Loading products..."></app-loading-spinner>
+  
+  <!-- Error State -->
+  <app-error-message *ngIf="error" [error]="error" (retry)="onRetryLoad()"></app-error-message>
+  
+  <!-- Products Grid -->
+  <div class="products-grid" *ngIf="!loading && !error">
+    <app-product-card 
+      *ngFor="let product of products; trackBy: trackById" 
+      [product]="product"
+      [selectedQuantity]="getSelectedQuantity(product.id)"
+      (addToCart)="onAddToCart($event)"
+      (quantityChange)="onQuantityChange($event)">
+    </app-product-card>
+  </div>
+  
+  <!-- No Products -->
+  <div *ngIf="!loading && !error && products.length === 0" class="no-products">
+    <p>No products found. Admin needs to add products first.</p>
+  </div>
+</div>

@@ -1,97 +1,40 @@
-<!-- Login Container -->
 <div class="login-container">
   <div class="login-box">
-    <!-- Title -->
     <div class="login-title">
       <h1>Bakery Management System</h1>
       <p>Please sign in to your account</p>
     </div>
 
-    <!-- Toggle Switch -->
     <div class="login-toggle">
-      <button 
-        type="button" 
-        class="toggle-btn" 
-        [class.active]="!isAdminLogin"
-        (click)="toggleLoginType(false)">
-        User Login
-      </button>
-      <button 
-        type="button" 
-        class="toggle-btn" 
-        [class.active]="isAdminLogin"
-        (click)="toggleLoginType(true)">
-        Admin Login
-      </button>
+      <button type="button" class="toggle-btn" [class.active]="!isAdminLogin" (click)="toggleLoginType(false)">User Login</button>
+      <button type="button" class="toggle-btn" [class.active]="isAdminLogin" (click)="toggleLoginType(true)">Admin Login</button>
     </div>
 
-    <!-- Login Form -->
-    <form (ngSubmit)="login()" #loginForm="ngForm">
+    <form [formGroup]="form" (ngSubmit)="login()" novalidate>
       <div class="form-group">
-        <label for="userId">{{ isAdminLogin ? 'Admin ID' : 'User ID' }}</label>
-        <input 
-          type="text" 
-          id="userId" 
-          name="userId"
-          [(ngModel)]="userId" 
-          (input)="onUserIdChange()"
-          [placeholder]="isAdminLogin ? 'Enter your admin id' : 'Enter your user id'"
-          required
-          class="form-input"
-          [class.error]="userIdError">
-        <div class="error-message" *ngIf="userIdError">{{ userIdError }}</div>
-        <div class="validation-hint" *ngIf="!userIdError">
-          6-16 characters, letters and numbers only
+        <label for="email">{{ isAdminLogin ? 'Admin Email' : 'User Email' }}</label>
+        <input id="email" type="email" formControlName="email" [placeholder]="isAdminLogin ? 'Enter your admin email' : 'Enter your email'" class="form-input" [class.error]="f['email'].invalid && f['email'].touched">
+        <div class="error-message" *ngIf="f['email'].errors && f['email'].touched">
+          <span *ngIf="f['email'].errors['required']">Email required</span>
+          <span *ngIf="f['email'].errors['email']">Invalid email</span>
         </div>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
         <div class="password-input-container">
-          <input 
-            [type]="showPassword ? 'text' : 'password'"
-            id="password" 
-            name="password"
-            [(ngModel)]="password" 
-            (input)="onPasswordChange()"
-            [placeholder]="isAdminLogin ? 'Enter your admin password' : 'Enter your password'" 
-            required
-            class="form-input"
-            [class.error]="passwordError">
-          <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" *ngIf="!showPassword">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" *ngIf="showPassword">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
-            </svg>
-          </button>
+          <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password" [placeholder]="isAdminLogin ? 'Enter your admin password' : 'Enter your password'" class="form-input" [class.error]="f['password'].invalid && f['password'].touched">
+          <button type="button" class="password-toggle" (click)="togglePasswordVisibility()">{{ showPassword ? 'Hide' : 'Show' }}</button>
         </div>
-        <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
-        <div class="validation-hint" *ngIf="!passwordError">
-          8-16 characters, starts with capital letter, includes special character
+        <div class="error-message" *ngIf="f['password'].errors && f['password'].touched">
+          <span *ngIf="f['password'].errors['required']">Password required</span>
+          <span *ngIf="f['password'].errors['minlength']">Min 6 characters</span>
         </div>
       </div>
 
-      <!-- Remember Me -->
-      <div class="remember-me">
-        <input type="checkbox" id="remember" name="remember" class="checkbox">
-        <label for="remember">Remember me</label>
-      </div>
+      <button type="submit" class="login-btn" [disabled]="form.invalid || loading">{{ loading ? 'Signing In...' : 'Sign In' }}</button>
 
-      <!-- Login Button -->
-      <button type="submit" class="login-btn" [disabled]="!loginForm.form.valid">
-        Sign In
-      </button>
-
-      <!-- Footer Links -->
       <div class="login-footer">
-        <a href="#" class="forgot-link" (click)="forgotPassword(); $event.preventDefault()">
-          Forgot your {{ isAdminLogin ? 'admin' : 'user' }} password?
-        </a>
-        <!-- Signup link only for user login, not for admin -->
         <div class="signup-link" *ngIf="!isAdminLogin">
           Don't have an account? <a href="#" class="signup" (click)="goToSignup(); $event.preventDefault()">Sign up here</a>
         </div>

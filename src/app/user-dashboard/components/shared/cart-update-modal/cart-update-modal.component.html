@@ -1,0 +1,39 @@
+<div class="modal-overlay" *ngIf="showModal" (click)="onCloseModal()">
+  <div class="modal-content" (click)="onModalClick($event)">
+    <div class="modal-header">
+      <h3>Update Cart Items</h3>
+      <button class="close-btn" (click)="onCloseModal()">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div *ngFor="let item of cartItems; trackBy: trackById" class="cart-item">
+        <div class="item-info">
+          <h4>{{ item.name }}</h4>
+          <p class="item-price">₹{{ item.price.toFixed(2) }}</p>
+        </div>
+        
+        <div class="quantity-controls">
+          <button 
+            (click)="onDecreaseQuantity(item.id)" 
+            class="qty-btn"
+            [disabled]="item.quantity <= 1">
+            -
+          </button>
+          <span class="quantity">{{ item.quantity }}</span>
+          <button 
+            (click)="onIncreaseQuantity(item.id)" 
+            class="qty-btn">
+            +
+          </button>
+        </div>
+        
+        <div class="item-total">₹{{ item.totalPrice.toFixed(2) }}</div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+      <button class="cancel-btn" (click)="onCloseModal()">Cancel</button>
+      <button class="update-btn" (click)="onUpdateCart()">Update Cart</button>
+    </div>
+  </div>
+</div>

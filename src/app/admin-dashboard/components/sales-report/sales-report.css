@@ -1,0 +1,80 @@
+/* Minimal sales report styling */
+.sales-section {
+  max-width: 760px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 16px 20px 20px;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+}
+
+.sales-section h2 {
+  font-size: 18px;
+  margin: 0 0 14px;
+  text-align: center;
+  color: #222;
+}
+
+.loading,
+.no-sales {
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+  margin: 10px 0 4px;
+}
+
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0 12px;
+}
+
+.summary-card {
+  background: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 12px;
+  min-width: 110px;
+  text-align: center;
+}
+
+.summary-card h3 {
+  font-size: 11px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.summary-card p {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.sale-item {
+  border: 1px solid #e2e2e2;
+  background: #fafafa;
+  padding: 10px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.sale-item p {
+  margin: 2px 0;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  .summary-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .summary-card {
+    width: 100%;
+    max-width: 200px;
+  }
+}

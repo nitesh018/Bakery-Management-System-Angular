@@ -1,0 +1,28 @@
+<div class="product-card">
+
+  <div class="product-image">
+    <span class="product-icon">🥞</span>
+  </div>
+
+  <div class="product-info">
+    <h3 class="product-name" [innerText]="product.name"></h3>
+    <p class="product-price">₹{{ product.price.toFixed(2) }}</p>
+    <p class="product-quantity">Available: {{ product.quantity }}</p>
+  </div>
+
+  <div class="product-actions" *ngIf="product.id">
+    <app-quantity-selector 
+      [quantity]="selectedQuantity" 
+      [maxQuantity]="product.quantity"
+      (quantityChange)="onQuantityChange($event)">
+  </app-quantity-selector>
+
+  <button 
+      (click)="onAddToCart()" 
+      class="add-to-cart-btn"
+      [disabled]="product.quantity === 0 || selectedQuantity === 0">
+      Add to Cart
+  </button>
+
+  </div>
+</div>

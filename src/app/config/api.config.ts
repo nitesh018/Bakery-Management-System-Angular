@@ -1,9 +1,24 @@
+import { environment } from '../../environments/environment';
+
 export const API_CONFIG = {
-  baseUrl: 'http://172.30.252.34:8080', // Backend URL provided by your developer
+  baseUrl: environment.apiBaseUrl, // '' in dev (proxy), full in prod
   endpoints: {
     userLogin: '/user/login',
-    adminLogin: '/admin/login', // Using same endpoint, will differentiate by user type
+    adminLogin: '/admin/login',
     userSignup: '/user/register',
-    forgotPassword: '/api/forgot-password' // Keep this for future implementation
+    productsAdmin: '/admin/item',
+    addProduct: '/admin/item/add',
+    updateProduct: '/admin/item/update',
+    deleteProductByName: '/admin/item/delete-by-name',
+    salesReport: '/admin/reports',
+    updateOrderStatus: '/admin/order/updatestatus',
+    userProducts: '/user/items',
+    userOrder: '/user/order',
+    userOrders: '/user/orders',
+    cartAdd: '/user/cart/add',
+    cart: '/user/cart',
+    cartView: '/user/cart/view', // added for view cart
+    cartCheckout: '/user/cart/checkout',
+    cartUpdate: '/user/cart/update'
   }
 };

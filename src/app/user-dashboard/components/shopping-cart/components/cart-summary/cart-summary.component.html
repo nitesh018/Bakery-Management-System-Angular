@@ -1,0 +1,9 @@
+<div class="cart-footer" *ngIf="hasItems">
+  <div class="total-amount">
+    <strong>Total: ₹{{ totalAmount.toFixed(2) }}</strong>
+  </div>
+  <div class="actions">
+    <button class="update-btn" (click)="updateCart.emit()">Update Cart</button>
+    <button class="checkout-btn" (click)="checkout.emit()">Checkout</button>
+  </div>
+</div>

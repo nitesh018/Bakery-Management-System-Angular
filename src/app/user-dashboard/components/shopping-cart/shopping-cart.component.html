@@ -1,0 +1,34 @@
+<div class="cart-modal" *ngIf="showCart" (click)="onCloseCart()">
+  <div class="cart-content" (click)="onModalClick($event)">
+    <div class="cart-header">
+      <h3>Shopping Cart</h3>
+      <button class="close-btn" (click)="onCloseCart()">×</button>
+    </div>
+    
+    <!-- Cart Loading -->
+    <div *ngIf="cartLoading" class="cart-loading">
+      <p>Loading cart...</p>
+    </div>
+    
+    <!-- Cart Items -->
+    <div class="cart-items" *ngIf="!cartLoading && cartItems.length > 0">
+      <app-cart-item 
+        *ngFor="let item of cartItems; trackBy: trackById" 
+        [item]="item">
+      </app-cart-item>
+    </div>
+    
+    <!-- Empty Cart -->
+    <div class="empty-cart" *ngIf="!cartLoading && cartItems.length === 0">
+      <p>Your cart is empty</p>
+    </div>
+    
+    <!-- Cart Footer -->
+    <app-cart-summary 
+      [totalAmount]="totalAmount" 
+      [hasItems]="cartItems.length > 0 && !cartLoading"
+      (updateCart)="onUpdateCart()"
+      (checkout)="onCheckout()">
+    </app-cart-summary>
+  </div>
+</div>

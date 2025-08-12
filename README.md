@@ -1,153 +1,218 @@
-# Library Management System
+# Bakery Management System
 
-An Angular-based frontend application for managing library operations, featuring a modern and responsive user interface.
+A web-based application for managing bakery operations, built with Angular 20. This system provides two separate interfaces - one for bakery administrators to manage products and orders, and another for customers to browse and purchase items.
 
 ## Features
 
-### Current Implementation
-- **Login Component**: Complete login page with modern UI design
-  - Responsive navbar with "Library Management System" branding
-  - Centered login form with User ID and Password fields
-  - Two-way data binding using Angular's `[(ngModel)]`
-  - Form validation for required fields
-  - "Forgot Password / Create ID" link
-  - Mock API integration using `fetch` for backend connection
+### Admin Dashboard
+- **Product Management**
+  - Add new bakery products with pricing and inventory
+  - Update existing product information
+  - Delete products from inventory
+  - View all products in a comprehensive list
+- **Order Management**
+  - Update order status (pending, processing, completed, cancelled)
+  - Track order history and details
+- **Sales Analytics**
+  - Generate detailed sales reports
+  - View revenue analytics and trends
+- **User Management**
+  - Admin authentication and authorization
+  - Secure admin-only access controls
 
-### Technical Stack
-- **Framework**: Angular 20+ with TypeScript
-- **Styling**: Plain CSS with responsive design (no external frameworks)
-- **Forms**: Angular Forms with template-driven approach
-- **HTTP**: Native fetch API for backend communication
-- **Architecture**: Component-based with modular structure
+### Customer Dashboard
+- **Product Browsing**
+  - Browse available bakery products with descriptions and pricing
+  - Search and filter through the product catalog
+  - Check real-time inventory availability
+- **Shopping Cart**
+  - Add products to cart with custom quantities
+  - Modify cart contents and update quantities
+  - Remove unwanted items
+  - View total cost and order summary
+- **Order Management**
+  - Place orders directly from the shopping cart
+  - Receive order confirmations
+  - Track order status and history
+- **User Account**
+  - Create new customer accounts
+  - Secure login and session management
+
+## Technology Stack
+
+- **Frontend**: Angular 20 with TypeScript
+- **UI/UX**: Custom CSS with responsive design
+- **State Management**: RxJS for reactive programming
+- **HTTP Client**: Angular HttpClient with interceptors
+- **Routing**: Angular Router with guards
+- **Forms**: Reactive Forms with validation
+- **Authentication**: JWT-based authentication system
+- **Development Server**: Angular CLI with proxy configuration
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── admin-dashboard/           # Admin interface
+│   │   └── components/           # Admin components
+│   │       ├── add-product/      # Product creation
+│   │       ├── update-product/   # Product editing
+│   │       ├── delete-product/   # Product removal
+│   │       ├── view-products/    # Product listing
+│   │       ├── sales-report/     # Analytics
+│   │       └── update-order-status/ # Order management
+│   ├── user-dashboard/           # Customer interface
+│   │   └── components/           # User components
+│   │       ├── navbar/           # Navigation
+│   │       ├── product-grid/     # Product display
+│   │       └── shopping-cart/    # Cart functionality
+│   ├── services/                 # Business logic
+│   │   ├── auth.service.ts       # Authentication
+│   │   ├── product.service.ts    # Product operations
+│   │   ├── cart.service.ts       # Cart management
+│   │   └── notification.service.ts # User notifications
+│   ├── guards/                   # Route protection
+│   │   ├── auth.guard.ts         # User authentication
+│   │   └── admin.guard.ts        # Admin authorization
+│   ├── interceptors/             # HTTP interceptors
+│   │   ├── auth.interceptor.ts   # JWT token handling
+│   │   ├── error.interceptor.ts  # Error handling
+│   │   └── loading.interceptor.ts # Loading states
+│   └── models/                   # Data interfaces
+│       ├── order.model.ts        # Order structure
+│       ├── cart.model.ts         # Cart structure
+│       └── sales-report.model.ts # Analytics structure
+```
 
 ## Getting Started
 
-### Prerequisites
-- Node.js (version 18 or higher)
-- npm (Node Package Manager)
-- Angular CLI
+### What You Need
+- Node.js (v18 or higher)
+- npm or yarn package manager
+- Backend API server running on port 8080
 
-### Installation
-1. Clone the repository
-2. Install dependencies:
+### How to Set Up
+
+1. **Download the project**
+   ```bash
+   git clone https://github.com/your-username/bakery-management-system.git
+   cd bakery-management-system
+   ```
+
+2. **Install required packages**
    ```bash
    npm install
    ```
 
-### Development Server
-To start a local development server, run:
+3. **Set up the environment**
+   - Make sure your backend server is running on port 8080
+   - Update API settings in `src/environments/environment.ts` if needed
+
+4. **Start the application**
+   ```bash
+   npm start
+   ```
+   Open your browser and go to `http://localhost:4200`
+
+### Available Commands
+
 ```bash
-ng serve
+# Start the development server
+npm start
+
+# Build for production
+npm run build
+
+# Run with automatic rebuilding
+npm run watch
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Security and Authentication
 
-## Project Structure
-```
-src/
-├── app/
-│   ├── login/           # Login component
-│   │   ├── login.ts     # Component logic with API integration
-│   │   ├── login.html   # Template with form and validation
-│   │   └── login.css    # Responsive styling
-│   ├── app.ts           # Root component
-│   └── app.config.ts    # App configuration
-├── styles.css           # Global styles
-└── index.html          # Main HTML file
-```
+### User Access Levels
+- **Admin Users**: Can manage all products, view sales reports, and update order statuses
+- **Regular Customers**: Can browse products, manage their cart, and place orders
 
-## API Integration
+### Security Features
+- JWT-based authentication
+- Role-based access control
+- Route guards for protected pages
+- HTTP interceptors for token management
+- Session management with automatic logout
 
-### Login Endpoint
-The application is configured to make API calls to `/api/login` with the following structure:
+## How It Connects to the Backend
 
-**Request:**
-```javascript
-POST /api/login
-Content-Type: application/json
+This application talks to a backend server through a REST API. Here's how it works:
+- **Development Setup**: Uses Angular's proxy to forward API calls to your backend
+- **Automatic Error Handling**: Built-in interceptors manage authentication tokens and errors
+- **Organized Services**: All API communication goes through dedicated service classes
 
+### API Routes
+- `/admin/*` - Admin operations (products, orders, reports)
+- `/user/*` - User operations (authentication, cart, orders)
+
+## Mobile and Desktop Support
+
+The application works well on both desktop computers and mobile devices. It automatically adjusts the layout based on screen size and works across different web browsers.
+
+## Configuration Details
+
+### Proxy Setup
+During development, the app uses this configuration to connect to your backend:
+```json
 {
-  "userId": "string",
-  "password": "string"
+  "/admin/": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/user/": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true
+  }
 }
 ```
 
-**Expected Response:**
-```javascript
-// Success
-{
-  "success": true,
-  "user": { ... },
-  "token": "jwt_token_here"
-}
+## Key Features Explained
 
-// Error
-{
-  "success": false,
-  "message": "Invalid credentials"
-}
-```
+### Product Management
+- Create, read, update, and delete bakery items
+- Upload and manage product images
+- Track inventory levels
+- Set and update pricing
 
-## Development Guidelines
+### Order Processing
+- Update order status in real-time
+- View complete order history
+- Send notifications to customers
+- Ready for payment system integration
 
-### Code Scaffolding
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-```bash
-ng generate component component-name
-```
+### Sales Analytics
+- Track sales performance over time
+- Monitor revenue trends
+- Analyze which products are most popular
+- Generate reports for specific date ranges
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-```bash
-ng generate --help
-```
+## Contributing to This Project
 
-### Building
-To build the project run:
-```bash
-ng build
-```
+If you'd like to contribute improvements or fixes:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-### Running Tests
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-```bash
-ng test
-```
-
-## Future Development
-
-### Planned Features
-- Dashboard component after successful login
-- Book management system (add, edit, delete, search)
-- User management for librarians
-- Book checkout/return functionality
-- Reports and analytics
-- User profile management
-- Advanced search and filtering
-
-### Backend Integration
-- Connect the mock API calls to actual backend endpoints
-- Implement proper authentication and authorization
-- Add error handling and user feedback
-- Implement session management
-
-## Contributing
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+1. Fork this repository to your GitHub account
+2. Create a new branch for your feature (`git checkout -b feature/your-feature-name`)
+3. Make your changes and commit them (`git commit -m 'Add your feature description'`)
+4. Push your changes (`git push origin feature/your-feature-name`)
+5. Create a Pull Request on GitHub
 
 ## License
-This project is licensed under the MIT License.
 
-```bash
-ng e2e
-```
+This project uses the ISC License.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Getting Help
 
-## Additional Resources
+If you run into issues or have questions about the project, please create an issue on the GitHub repository and I'll help you out.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+This bakery management system was built to help bakery owners manage their business more efficiently while providing customers with a smooth online shopping experience.

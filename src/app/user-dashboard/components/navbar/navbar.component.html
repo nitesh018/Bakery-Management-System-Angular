@@ -1,0 +1,30 @@
+<!-- Navigation Bar -->
+<nav class="navbar">
+  
+  <!-- Left side: Logo section -->
+  <div class="navbar-left">
+    <div class="logo">
+      <span class="logo-text">Bakery</span>
+      <span class="logo-title">Shop</span>
+    </div>
+  </div>
+  
+  <!-- Center: Main title -->
+  <div class="navbar-center">
+    <h1 class="brand-title">Bakery Management System</h1>
+  </div>
+  
+  <!-- Right side: Cart and Logout -->
+  <div class="navbar-right">
+    <!-- Cart icon with count -->
+    <div class="cart-icon" (click)="onCartToggle()">
+      <span class="cart-symbol">Cart</span>
+      <!-- Show cart count only if greater than 0 -->
+      <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+    </div>
+    <!-- Logout button click hone par onLogout() chalega-->
+    <button (click)="onLogout()" class="logout-btn">Logout</button>
+  </div>
+  
+</nav>
+

@@ -1,5 +1,5 @@
 {
-  "name": "library-management-system",
+  "name": "bakery-management-system",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -35,9 +35,9 @@
     "@angular/compiler-cli": "^20.1.0",
     "typescript": "~5.8.2"
   },
-  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.",
+  "description": "A comprehensive bakery management system built with Angular for managing products, orders, and sales.",
   "main": "index.js",
-  "keywords": [],
+  "keywords": ["angular", "bakery", "management", "typescript", "dashboard"],
   "author": "",
   "license": "ISC"
 }

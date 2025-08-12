@@ -1,92 +1,49 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { API_CONFIG } from '../config/api.config';
-import { HttpClient } from '@angular/common/http';
-import { Api } from '../services/api';
+import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
-////////////////////////////////////////////////
 @Component({
   selector: 'app-signup',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './signup.html',
   styleUrl: './signup.css'
 })
 export class Signup {
-  fullName: string = '';
-  email: string = '';
-  newUserId: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
+  form: FormGroup;
+  loading = false;
 
-  constructor(private router: Router, private http : HttpClient, private api : Api) {}
-
-  signup() {
-    if (this.newPassword !== this.confirmPassword) {
-      alert('Passwords do not match!');
-      return;
-    }
-
-    console.log('Signup attempt:', {
-      fullName: this.fullName,
-      email: this.email,
-      userId: this.newUserId,
-      password: this.newPassword
-    });
-
-    // Placeholder API call for signup
-    this.makeSignupApiCall();
+  constructor(private router: Router, private authService: AuthService, private notify: NotificationService, fb: FormBuilder) {
+    this.form = fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.email]],
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]]
+    }, { validators: [this.passwordsMatchValidator] });
   }
 
-  goToLogin() {
-    console.log('Navigating back to login page');
-    this.router.navigate(['/login']);
+  get f() { return this.form.controls; }
+
+  passwordsMatchValidator(group: AbstractControl) {
+    const pass = group.get('newPassword')?.value;
+    const confirm = group.get('confirmPassword')?.value;
+    return pass === confirm ? null : { passwordsMismatch: true };
   }
 
-  private async makeSignupApiCall() {
-    // try {
-    //   const response = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.userSignup}`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       name: this.fullName,
-    //       email: this.email,
-    //       password: this.newPassword
-    //     })
-    //   });
-
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log('Signup successful:', data);
-    //     alert('Account created successfully! Please login.');
-    //     this.router.navigate(['/login']);
-    //   } else {
-    //     const errorData = await response.json().catch(() => ({}));
-    //     console.error('Signup failed:', errorData);
-    //     alert(`Signup failed: ${errorData.message || response.statusText}`);
-    //   }
-    // } catch (error) {
-    //   console.error('Network error:', error);
-    //   alert('Network error. Please check your connection.');
-    // 
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    const payload = {
-        name: this.fullName,
-          email: this.email,
-          password: this.newPassword
-    }
-     this.api.post<any>(API_CONFIG.baseUrl, API_CONFIG.endpoints.userSignup, payload)
-    .then(response => {
-      console.log('Signup Successful:', response);
-    })
-    .catch(error => {
-      console.error('Signup Failed:', error);
-    });
+  async signup() {
+    if (this.form.invalid) { this.form.markAllAsTouched(); this.notify.error('Fix form errors'); return; }
+    this.loading = true;
+    const payload = { name: this.f['fullName'].value, email: this.f['email'].value, password: this.f['newPassword'].value };
+    try {
+      const result = await this.authService.userRegister(payload);
+      if (result.success) { this.notify.success('Account created. Login now.'); this.goToLogin(); }
+      else { this.notify.error(result.message || 'Signup failed'); }
+    } catch { this.notify.error('Network error'); }
+    finally { this.loading = false; }
   }
 
+  goToLogin() { this.router.navigate(['/login']); }
+  clearForm() { this.form.reset(); }
 }

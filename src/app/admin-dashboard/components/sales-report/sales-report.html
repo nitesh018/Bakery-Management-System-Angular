@@ -1,0 +1,16 @@
+<div class="sales-section">
+  <h2>Sales Report</h2>
+  <div *ngIf="isLoading" class="loading">
+    <p>Loading...</p>
+  </div>
+  <div *ngIf="!isLoading && salesData.sales.length === 0" class="no-sales">
+    <p>No sales data found</p>
+  </div>
+  <div *ngFor="let sale of salesData.sales" class="sale-item">
+    <p><strong>Order ID:</strong> {{ sale.order_id }}</p>
+    <p><strong>User:</strong> {{ sale.user_email || 'N/A' }}</p>
+    <p><strong>Status:</strong> {{ sale.status || 'PENDING' }}</p>
+    <p><strong>Date:</strong> {{ formatDate(sale.created_at || '') }}</p>
+    <p><strong>Total:</strong> ₹{{ (sale.total_price || 0).toFixed(2) }}</p>
+  </div>
+</div>

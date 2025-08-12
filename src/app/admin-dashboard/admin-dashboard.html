@@ -1,0 +1,53 @@
+<div class="navbar">
+  <div class="navbar-left">
+    <div class="logo">Bakery</div>
+    <span class="title">Admin Panel</span>
+  </div>
+  <div class="navbar-right">
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </div>
+</div>
+
+
+<div class="main-content">
+  <h1>Admin Dashboard</h1>
+  <p>Manage your bakery products easily</p>
+
+  <div class="action-buttons">
+    <button class="action-btn" [class.active]="isActive('add-product')" (click)="showAddProduct()">
+      <span class="btn-icon">+</span>
+      <span class="btn-text">Add Product</span>
+    </button>
+    
+    <button class="action-btn" [class.active]="isActive('update-product')" (click)="showUpdateProduct()">
+      <span class="btn-icon">Edit</span>
+      <span class="btn-text">Update Product</span>
+    </button>
+    
+    <button class="action-btn" [class.active]="isActive('delete-product')" (click)="showDeleteProduct()">
+      <span class="btn-icon">×</span>
+      <span class="btn-text">Delete Product</span>
+    </button>
+    
+    <button class="action-btn" [class.active]="isActive('view-products')" (click)="viewAllProducts()">
+      <span class="btn-icon">View</span>
+      <span class="btn-text">View All Products</span>
+    </button>
+    
+    <button class="action-btn" [class.active]="isActive('sales-report')" (click)="viewSalesReport()">
+      <span class="btn-icon">Report</span>
+      <span class="btn-text">Sales Report</span>
+    </button>
+    
+    <button class="action-btn" [class.active]="isActive('order-status')" (click)="viewOrderStatus()">
+      <span class="btn-icon">Status</span>
+      <span class="btn-text">Change Order Status</span>
+    </button>
+  </div>
+
+
+  <div class="component-content">
+    <!-- all products list yaha se display hoga -->
+    <router-outlet></router-outlet>
+  </div>
+</div>

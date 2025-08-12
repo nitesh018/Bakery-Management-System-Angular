@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "library-management-system": {
+    "bakery-management-system": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -18,6 +18,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "index": "src/index.html",
             "polyfills": [
               "zone.js"
             ],
@@ -51,7 +52,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -60,10 +67,11 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "library-management-system:build:production"
+              "buildTarget": "bakery-management-system:build:production"
             },
             "development": {
-              "buildTarget": "library-management-system:build:development"
+              "buildTarget": "bakery-management-system:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

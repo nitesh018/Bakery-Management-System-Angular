@@ -1,0 +1,23 @@
+<div class="form-section" [formGroup]="form">
+  <h2>Update Product</h2>
+  <div *ngIf="isLoading" class="loading"><p>Loading...</p></div>
+  <div class="form-group">
+    <label>Product Name:</label>
+    <input type="text" formControlName="name" placeholder="Enter product name to update" [class.error]="f['name'].invalid && f['name'].touched">
+    <div class="error-message" *ngIf="f['name'].errors && f['name'].touched">Name required</div>
+  </div>
+  <div class="form-group">
+    <label>New Price:</label>
+    <input type="number" formControlName="price" placeholder="Enter new price" [class.error]="f['price'].invalid && f['price'].touched">
+    <div class="error-message" *ngIf="f['price'].errors && f['price'].touched">Price &gt; 0</div>
+  </div>
+  <div class="form-group">
+    <label>New Quantity:</label>
+    <input type="number" formControlName="quantity" placeholder="Enter new quantity" [class.error]="f['quantity'].invalid && f['quantity'].touched">
+    <div class="error-message" *ngIf="f['quantity'].errors && f['quantity'].touched">Quantity ≥ 0</div>
+  </div>
+  <div class="form-buttons">
+    <button (click)="updateExistingProduct()" class="submit-btn" [disabled]="form.invalid || isLoading">{{ isLoading ? 'Updating...' : 'Update Product' }}</button>
+    <button (click)="clearUpdateForm()" type="button" class="cancel-btn">Clear Form</button>
+  </div>
+</div>
