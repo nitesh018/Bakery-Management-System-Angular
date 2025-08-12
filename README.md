@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Bakery Management System
 
 A web-based application for managing bakery operations, built with Angular 20. This system provides two separate interfaces - one for bakery administrators to manage products and orders, and another for customers to browse and purchase items.
@@ -216,3 +217,6 @@ If you run into issues or have questions about the project, please create an iss
 ---
 
 This bakery management system was built to help bakery owners manage their business more efficiently while providing customers with a smooth online shopping experience.
+=======
+# Bakery-Management-System-Angular
+>>>>>>> 29b6b64759c9c01a75fe125fb6fb5d752e514959
