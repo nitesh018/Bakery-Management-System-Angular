@@ -97,8 +97,8 @@ src/
 
 1. **Download the project**
    ```bash
-   git clone https://github.com/your-username/bakery-management-system.git
-   cd bakery-management-system
+   git clone https://github.com/nitesh018/Bakery-Management-System-Angular.git
+   cd Bakery-Management-System-Angular
    ```
 
 2. **Install required packages**
